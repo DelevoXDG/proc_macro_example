@@ -1,5 +1,5 @@
 [package]
-name = "some_macro"
+name = "proc_macro_example"
 version = "0.1.0"
 
 [cairo-plugin]
