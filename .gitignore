@@ -1,6 +1,10 @@
 target/**
 .cargo
-!target/scarb/
-!target/scarb/**/
-!target/scarb/cairo-plugin/**
-
+!target/package/
+!target/package/**/
+!target/package/target/
+!target/package/target/**/
+!target/package/target/scarb/
+!target/package/target/scarb/**/
+!target/package/target/scarb/cairo-plugin/
+!target/package/target/scarb/cairo-plugin/**
