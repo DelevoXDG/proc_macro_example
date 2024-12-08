@@ -2,6 +2,9 @@
 $scarbContent = Get-Content "Scarb.toml" -Raw
 $packageName = [regex]::Match($scarbContent, 'name\s*=\s*"([^"]+)"').Groups[1].Value
 $packageVersion = [regex]::Match($scarbContent, 'version\s*=\s*"([^"]+)"').Groups[1].Value
+$cargoContent = Get-Content "Cargo.toml" -Raw
+$cargoPackageName = [regex]::Match($cargoContent, 'name\s*=\s*"([^"]+)"').Groups[1].Value
+$cargoPackageVersion = [regex]::Match($cargoContent, 'version\s*=\s*"([^"]+)"').Groups[1].Value
 
 if (!$packageName -or !$packageVersion) {
     Write-Error "Could not extract package name or version from Scarb.toml"
@@ -21,10 +24,10 @@ cargo build --release --target $target
 $binaryName = "${packageName}_v${packageVersion}_${target}.dll"
 $sourcePath = "target/$target/release"
 
-if (Test-Path "$sourcePath/lib$packageName.dll") {
-    Copy-Item "$sourcePath/lib$packageName.dll" "$targetDir/$binaryName"
-} elseif (Test-Path "$sourcePath/$packageName.dll") {
-    Copy-Item "$sourcePath/$packageName.dll" "$targetDir/$binaryName"
+if (Test-Path "$sourcePath/lib$cargoPackageName.dll") {
+    Copy-Item "$sourcePath/lib$cargoPackageName.dll" "$targetDir/$binaryName"
+} elseif (Test-Path "$sourcePath/$cargoPackageName.dll") {
+    Copy-Item "$sourcePath/$cargoPackageName.dll" "$targetDir/$binaryName"
 } else {
     Write-Error "Could not find binary in $sourcePath"
     exit 1
